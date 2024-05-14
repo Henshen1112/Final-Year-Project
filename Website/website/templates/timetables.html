@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Timetables{% endblock %}
+{% block styles %}
+<style>
+  .conflict {
+    background-color: #ff9999;
+    border: 1px solid #ff0000;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .table-bordered th,
+  .table-bordered td {
+    border: 1px solid #dee2e6;
+  }
+
+  .table-bordered th {
+    background-color: #f8f9fa;
+  }
+
+  .table-bordered th,
+  .table-bordered td {
+    vertical-align: middle;
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="text-center mb-4">UTeM FTMK's BITI & BITS Timetable</h3>
+      <hr>
+      <div class="text-center">
+        <a href="{{ url_for('views.download_pdf') }}" class="btn btn-primary">Download Timetable</a>
+      </div>
+      {% if all_timetables %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Monday</th>
+                  <th>Tuesday</th>
+                  <th>Wednesday</th>
+                  <th>Thursday</th>
+                  <th>Friday</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for hour in range(9, 18) %}
+                <tr>
+                  <th>{{ hour }}:00 - {{ hour + 1 }}:00</th>
+                  {% for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] %}
+                  <td>
+                    {% for timeslot in all_timetables[0].timetable %}
+                    {% if timeslot.day == day and timeslot.hour <= hour < timeslot.hour + timeslot.duration %}
+                      <div class="{% if timeslot.conflict %}conflict{% endif %}">
+                        <p class="text-center">{{ timeslot.class_type }} - {{ timeslot.cid }} {{ timeslot.course_name }}</p>
+                        <p class="text-center">{{ timeslot.room_id }}</p>
+                        <p class="text-center">{{ timeslot.lecturer_name }}</p>
+                        <p class="text-center">{{ timeslot.year_level }} {{ timeslot.program }} {{ timeslot.student_group }}</p>
+                        <p class="text-center">_______________________</p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                  </td>
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <p class="text-center">No timetables available.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

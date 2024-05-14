@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Lecturers{% endblock %}
+{% block content %}
+  <h3 align="center">Add Lecturer</h3>
+  <form method="POST">
+    <div class="form-group">
+      <label for="lid">Lecturer ID:</label>
+      <input type="text" class="form-control" id="lid" name="lid" placeholder="Enter Lecturer ID" required>
+    </div>
+    <div class="form-group">
+      <label for="lecturer_name">Lecturer Name:</label>
+      <input type="text" class="form-control" id="lecturer_name" name="lecturer_name" placeholder="Enter Lecturer Name" required>
+    </div>
+    <div class="form-group">
+      <label for="preference">Lecturer Preferences:</label>
+      <select class="form-control" id="preference" name="preference" multiple>
+        {% for course in courses %}
+          <option value="{{ course[0] }}">{{ course[1] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="qualification">Lecturer Qualification:</label>
+      <select class="form-control" id="qualification" name="qualification" multiple>
+        {% for course in courses %}
+          <option value="{{ course[0] }}">{{ course[1] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+  </form>
+  <h3 align="center">Lecturer List</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Lecturer ID</th>
+        <th>Lecturer Name</th>
+        <th>Preferences</th>
+        <th>Qualifications</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lecturer in lecturers %}
+        <tr>
+          <td>{{ lecturer[0] }}</td>
+          <td>{{ lecturer[1] }}</td>
+          <td>
+            {% if lecturer[2] %}
+              {{ lecturer[2] }}
+            {% else %}
+              N/A
+            {% endif %}
+          </td>
+          <td>
+            {% if lecturer[3] %}
+              {{ lecturer[3] }}
+            {% else %}
+              N/A
+            {% endif %}
+          </td>
+          <td>
+            {% if lecturer == edit_lecturer %}
+              <form method="POST" action="{{ url_for('auth.edit_lecturer', lid=lecturer[0]) }}">
+                <div class="form-group">
+                  <label for="lecturer_name">Lecturer Name:</label>
+                  <input type="text" class="form-control" id="lecturer_name" name="lecturer_name" value="{{ lecturer[1] }}" required>
+                </div>
+                <div class="form-group">
+                  <label for="preference">Lecturer Preferences:</label>
+                  <select class="form-control" id="preference" name="preference" multiple>
+                    {% for course in courses %}
+                      <option value="{{ course[0] }}"
+                        {% if course[1] in lecturer[2].split(',') %} selected {% endif %}>
+                        {{ course[1] }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="qualification">Lecturer Qualification:</label>
+                  <select class="form-control" id="qualification" name="qualification" multiple>
+                    {% for course in courses %}
+                      <option value="{{ course[0] }}"
+                        {% if course[1] in lecturer[3].split(',') %} selected {% endif %}>
+                        {{ course[1] }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+              </form>
+            {% else %}
+              <a href="{{ url_for('auth.edit_lecturer', lid=lecturer[0]) }}" class="btn btn-primary btn-sm">Edit</a>
+              <a href="{{ url_for('auth.delete_lecturer', lid=lecturer[0]) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this lecturer?')">Delete</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

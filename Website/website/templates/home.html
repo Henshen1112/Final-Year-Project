@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card border-0 shadow">
+        <div class="card-body">
+          <h3 class="text-center mb-4">Welcome to UTeM's FTMK Timetable Generator</h3>
+          <hr class="my-4">
+          <form method="POST" action="/">
+            <div class="form-group">
+              <label for="year_level">Select Year:</label>
+              <select class="form-control" id="year_level" name="year_level" multiple>
+                <option value="1">Year 1</option>
+                <option value="2">Year 2</option>
+                <option value="3">Year 3</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="program">Select Program:</label>
+              <select class="form-control" id="program" name="program" multiple>
+                <option value="BITI">BITI</option>
+                <option value="BITS">BITS</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="studentGroup">Select Batch:</label>
+              <select class="form-control" id="studentGroup" name="studentGroup" multiple>
+                <option value="S1G1">S1G1</option>
+                <option value="S1G2">S1G2</option>
+                <option value="S2G1">S2G1</option>
+                <option value="S2G2">S2G2</option>
+              </select>
+            </div>
+            <div class="text-center mt-4">
+              <button type="button" id="select-all" class="btn btn-secondary">Select All</button>
+            </div>
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary btn-lg">Generate Timetables</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const selectAllButton = document.getElementById("select-all");
+    const yearLevelSelect = document.getElementById("year_level");
+    const programSelect = document.getElementById("program");
+    const studentGroupSelect = document.getElementById("studentGroup");
+  
+    selectAllButton.addEventListener("click", function () {
+      selectAllOptions(yearLevelSelect);
+      selectAllOptions(programSelect);
+      selectAllOptions(studentGroupSelect);
+    });
+  
+    function selectAllOptions(selectElement) {
+      for (let i = 0; i < selectElement.options.length; i++) {
+        selectElement.options[i].selected = true;
+      }
+    }
+  });
+  </script>
+{% endblock %}

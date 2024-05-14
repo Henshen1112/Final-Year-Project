@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Add Student Group{% endblock %}
+{% block content %}
+    <form method="POST">
+        <h3 align="center">Assign Courses to Groups</h3>
+        <div class="form-group">
+            <label for="program">Select Program:</label>
+            <select class="form-control" id="program" name="program">
+                <option value="BITI">BITI</option>
+                <option value="BITS">BITS</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="year_level">Year</label>
+            <select class="form-control" id="year_level" name="year_level">
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3">3rd Year</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="studentgroup_name">Batch</label>
+            <select class="form-control" id="studentgroup_name" name="studentgroup_name">
+                <option value="S1G1">S1G1</option>
+                <option value="S1G2">S1G2</option>
+                <option value="S2G1">S2G1</option>
+                <option value="S2G2">S2G2</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="classgroup_id">Class Type - Course ID Course Name</label>
+            <select class="form-control" id="classgroup_id" name="classgroup_id" multiple>
+                {% for classgroup in classgroups %}
+                    <option value="{{ classgroup[0] }}">{{ classgroup[1] }} - {{ classgroup[2] }} {{ classgroup[3] }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+    <h3 align="center">Batches List</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Student Batch ID</th>
+                <th>Class Type</th>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Year</th>
+                <th>Program</th>
+                <th>Batch</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for studentgroup in studentgroups %}
+                <tr>
+                    <td>{{ studentgroup[0] }}</td>
+                    <td>{{ studentgroup[2] }}</td>
+                    <td>{{ studentgroup[3] }}</td>
+                    <td>{{ studentgroup[4] }}</td>
+                    <td>{{ studentgroup[6] }}</td>
+                    <td>{{ studentgroup[1] }}</td>
+                    <td>{{ studentgroup[5] }}</td>
+                    <td>
+                        <a href="{{ url_for('auth.delete_studentgroup', sgid=studentgroup[0]) }}"
+                            class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
