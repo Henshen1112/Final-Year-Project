@@ -6,7 +6,7 @@
 - [Acknowledgements](#acknowledgements)
 
 ## Introduction
-This repository contains a Genetic Algorithm implementation developed as part of a university project. Genetic Algorithms (GAs) are optimization techniques inspired by the process of natural selection. This project aims to demonstrate how GAs can be applied to solve complex optimization problems.
+This repository contains a Genetic Algorithm implementation developed as part of a university final year project. Genetic Algorithms (GAs) are optimization techniques inspired by the process of natural selection. This project aims to demonstrate how GAs can be applied to solve complex optimization problems.
 
 ## Background
 Genetic Algorithms are a subset of evolutionary algorithms that use techniques such as selection, crossover, and mutation to evolve a population of candidate solutions towards an optimal solution. The main steps in a GA include:
@@ -17,6 +17,6 @@ Genetic Algorithms are a subset of evolutionary algorithms that use techniques s
 5. Replacement: Form a new population based on fitness.
 
 ## Acknowledgements
-- UTeM for providing the resources and support for this project.
-- Professors and mentors who guided the project.
-- Open-source libraries and contributors that made this project possible.
+- Thanks to Universiti Teknikal Malaysia Melaka for providing the opportunity and resources to complete this project.
+- Special thanks to my supervisor, Dr Zeratul for her guidance.
+- Gratitude to the contributors of open-source libraries used in this project.
